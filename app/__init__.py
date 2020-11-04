@@ -2,7 +2,7 @@ from flask import Flask
 from flask_assets import Bundle, Environment
 from flask_mysqldb import MySQL
 import os
-import yaml
+
 
 
 app = Flask(__name__)
@@ -17,7 +17,7 @@ assets = Environment(app)
 assets.register('main_css',css)
 
 #configure db
-db = yaml.load(open('app/db.yaml'))
+
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'root123'
