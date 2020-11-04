@@ -31,4 +31,5 @@ STEP 3
 
 -> Downloading Flask packages to run the project
 
--> 
+-> To download flask use this cmd:
+	pip install -r requriments.txt
