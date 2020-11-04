@@ -1,0 +1,29 @@
+{% extends 'jinja_temp/login.html' %}
+{% include 'includes/_message.html' %}
+
+{% block title %}
+    SignIn
+{% endblock title %}
+
+{% block main %}
+<style>
+    body {
+        background-image: url("{{url_for ('static',filename='img/login.jpg') }}");
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+</style>
+
+<div class="login-form">
+    <h1>Login</h1>
+    <form action="" method="POST">
+        <input type="text" class="login-box" placeholder="Username" name="username">
+        <input type="password" class="login-box" placeholder="Password" name="password">
+        <button type="submit" class="next-btn">Sign up</button>
+        <hr>
+        <p>New Accout? <a href="/register">Register</a> </p>
+    </form>
+</div>
+{% endblock main %}
