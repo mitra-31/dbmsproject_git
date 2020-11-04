@@ -4,7 +4,7 @@ STEP 1
 
 -> Unziping the file after downloading 
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+****************************************************************
 
 STEP 2
 
@@ -27,9 +27,24 @@ STEP 2
 
 			(name your virtual env)\Scripts\activate  [example: base\Scripts\activate]
 
+***********************************************************************************************************************************
+
 STEP 3
 
 -> Downloading Flask packages to run the project
 
 -> To download flask use this cmd:
-	pip install -r requriments.txt
+
+	pip install -r requirements.txt
+
+-> If you get Error for above cmd install flask manaully
+
+	pip install flask flask-assets flask-fontawesome flask-mysqldb
+	
+#How to run the project
+
+-> Its simple to run the project
+	first you have to be in your virtual environment [example: (env) cd:\ User\username\download\music-app-flask]
+	cmd: py run.py
+-> after cmd runs sucessfully open your browser and search for this :
+	http://127.0.0.1:5000/
