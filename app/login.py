@@ -4,7 +4,7 @@ from flask import Flask,render_template,request,redirect,flash,session,url_for
 from flask_fontawesome import fontawesome_css
 import os
 
-
+#home page
 @app.route('/')
 def home():
     home_img = os.path.join(app.config['UPLOAD_FOLDER'], 'band.png')
@@ -16,7 +16,7 @@ def home():
 
 
 
-## Login 
+# Login 
 @app.route("/login",methods=['GET','POST'])
 def login():
     login_img = os.path.join(app.config['UPLOAD_FOLDER'],'background.jpg')
