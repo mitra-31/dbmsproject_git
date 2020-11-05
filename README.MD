@@ -39,7 +39,7 @@ STEP 3
 
 -> If you get Error for above cmd install flask manaully
 
-	pip install flask flask-assets flask-fontawesome flask-mysqldb
+	pip install flask flask-assets flask-fontawesome flask-MySQLdb
 
 *******************************************************************************************************
 
