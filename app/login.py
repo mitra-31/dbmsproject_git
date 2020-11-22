@@ -73,8 +73,7 @@ def register():
                 cur.execute("INSERT INTO logindetails(username,email,password,confirm) VALUES(%s,%s,%s,%s)", ( username, email,  password, confrim))
                 mysql.connection.commit()
                 cur.close()
-                flash("Successfully registered","success")    
-                print('sucsess')            
+                flash("Successfully registered","success")               
                 return redirect('/login')
             else:
                 flash("password and confrim does not matched","danger")
