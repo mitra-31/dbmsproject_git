@@ -1,0 +1,51 @@
+.profile{
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+body{
+    background-color: aliceblue;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+#photo{
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+
+}
+
+#file{
+   font-size: 16px;
+   background: white;
+   border-radius: 50px;
+   width: 250px;
+   outline: none;
+}
+
+.profile ::-webkit-file-upload-button{
+    color: black;
+    background: #ffc001;
+    padding: 20px;
+    border: none;
+    border-radius: 50px;
+}
+
+::-webkit-file-upload-button::hover{
+    background: black;
+}
+
+.username{
+    position: relative;
+    border-radius: 50px;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    color: blue;
+    outline:none;
+}

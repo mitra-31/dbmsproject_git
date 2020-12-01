@@ -1,15 +1,16 @@
-from app import app,mysql
+from app import app,mysql,save_images
 from app import dashboard
-from flask import Flask,render_template,request,redirect,flash,session,url_for
+from flask import Flask,render_template,request,redirect,flash,session,url_for,current_app
 from flask_fontawesome import fontawesome_css
 import os
 
 #home page
 @app.route('/')
 def home():
-    home_img = os.path.join(app.config['UPLOAD_FOLDER'], 'band.png')
- 
-    return render_template('login/home.html',img1 = home_img)
+    home_img1 = os.path.join(app.config['UPLOAD_FOLDER'], 'bg.jpg')
+    home_img2 = os.path.join(app.config['UPLOAD_FOLDER'], 'band.png')
+    home_img3 = os.path.join(app.config['UPLOAD_FOLDER'], 'login.jpg')
+    return render_template('login/home.html',img1 = home_img1,img2 = home_img2,img3 = home_img3)
 
 
 
@@ -56,33 +57,27 @@ def register():
     #inserting values inside loginDetials table
     if request.method == 'POST':
         user = request.form
-        username = user['username']
-        if username:
-            flash("User Exists","danger")
-            return redirect(url_for('register'))
+        firstname = user['firstname']
+        lastname = user['lastname']
         email = user['email']
-        if email:
-            flash("Email Exists Already","danger")
-            return redirect(url_for("register"))
         password = user['password']
-        confrim = user['confrim']
-        
-        if  len(username) > 0 and len(email) > 0 and len(password) > 0 and len(confrim) > 0:
-            if password == confrim:
-                cur = mysql.connection.cursor()
-                cur.execute("INSERT INTO logindetails(username,email,password,confirm) VALUES(%s,%s,%s,%s)", ( username, email,  password, confrim))
-                mysql.connection.commit()
-                cur.close()
-                flash("Successfully registered","success")               
-                return redirect('/login')
-            else:
-                flash("password and confrim does not matched","danger")
-                return redirect('/register')
-        else:
-            return "Enter everything"
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO user(firstname,lastname,email,password) VALUES(%s,%s,%s,%s)", (firstname,lastname,email,password))
+        mysql.connection.commit()
+        cur.close()
+        flash("Successfully registered","success")                
+        return redirect('/profilepic')
         
 
     return render_template('login/signup.html' , img2 = login_img)
 
-
+@app.route("/profilepic",methods=['GET','POST'])
+def profile():
+    if request.method == 'POST':
+        photo = save_images(request.files.get('photo'))
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO user(photo) VALUES(%s)", ( photo))
+        mysql.connection.commit()
+        cur.close()
+    return render_template("login/profilepic.html")
 
