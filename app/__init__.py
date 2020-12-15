@@ -8,17 +8,40 @@ import os
 
 app = Flask(__name__)
 
+
+
+
 #images
 imgfolder = os.path.join('static','img')
 app.config['UPLOAD_FOLDER'] = imgfolder
 
+music = os.path.join('static','music')
+app.config['UPLOAD_FOLDER'] = music
+
 #css Bundling
-css = Bundle('css/home.css','css/signin.css','css/dashboard.css','css/profile.css',output='gen/main.css')
+css = Bundle('css/home.css','css/signin.css','css/dashboard.css','css/profile.css','css/music_dash.css',output='gen/main.css')
 assets = Environment(app)
 assets.register('main_css',css)
 
 
+def music(song):
+    name = os.path.splitext(song.filename)
+    print(os.path.splitext(song.filename))
+    if name[1] in ".MP3,.mp3":
+        title = name[0] + name[1]
+    file_path = os.path.join(current_app.root_path, 'static/music',title)
+    song.save(file_path)
 
+    return title
+def save_music(song):
+    #print(song)
+    name = os.path.splitext(song.filename)
+    #print(os.path.splitext(song.filename))
+    if name[1].lower() in ".mp3,.wav":
+        music_name = name[0] + name[1]
+    file_path = os.path.join(current_app.root_path, 'static/music',music_name)
+    song.save(file_path)
+    return music_name
 
 def save_images(photo):
     print(photo)
@@ -34,8 +57,8 @@ def save_images(photo):
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root123'
-app.config['MYSQL_DB'] = 'demo'
+app.config['MYSQL_PASSWORD'] = 'user123'
+app.config['MYSQL_DB'] = 'project'
 mysql = MySQL(app)
 
 

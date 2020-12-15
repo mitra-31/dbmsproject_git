@@ -28,23 +28,27 @@ SignIn
     a:hover{
         color: #444;
     }
+    .submit .login_btn{
+    padding: 5px 32px;
+    text-align: center;
+}
 </style>
 
 
 
 <div class="form">
     <span class="logo">LOGIN</span>
-    <form action="">
+    <form action="" method="POST">
         <div class="field">
-            <input type="text">
+            <input type="text" name="username" placeholder="username">
             <span><i class="fa fa-user"></i></span>
         </div>
         <div class="field">
-            <input type="text">
+            <input type="text" name="password" placeholder="password">
             <span><i class="fa fa-lock"></i></span>
         </div>
         <div class="submit">
-            <input type="submit" value="Login  ">
+            <button type="submit" class="login_btn" value="Login">LOGIN</button>
         </div>
         <a href="">NEW MEMBER?</a>
     </form>

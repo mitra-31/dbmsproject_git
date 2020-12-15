@@ -1,10 +1,13 @@
 {% extends 'jinja_temp/user_dashboard.html' %}
 
 {% block title %}
-    {{ user[0][0] }}
 {% endblock title %}
 
 {% block main %}
-
-        
+    <form action="" method="post" enctype="multipart/form-data">
+        <input type="text" name="title" id="">
+        <input type="file" name="data">
+        <input type="file" name="pic">
+        <input type="submit" value="submit">
+    </form>
 {% endblock main %}

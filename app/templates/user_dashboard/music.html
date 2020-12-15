@@ -1,0 +1,35 @@
+{% extends 'jinja_temp/user_dashboard.html' %}
+
+{% block title %}
+{% endblock title %}
+
+{% block main %}
+<style>
+  audio{
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    outline: none;
+  }
+</style>
+<div class="row">
+  {% for song in music %}
+    
+  <div class="col-lg-3">
+    <div class="card">
+      <a href="javascript:void(0);" onclick="playsong('{{song[1]}}')"><img src="{{url_for('static',filename='img/uploads/{}'.format(song[2]))}}" alt="{{song[1]}}" width="200px" height="200px"></a>
+      <h1>{{song[0]}}</h1>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<h1></h1>
+<audio controls autoplay></audio>
+
+<script>
+  function playsong(song){
+    $('audio').attr('src','static/music/'+song);
+    $('h1').attr(song);
+  }
+</script>
+{% endblock main %}  

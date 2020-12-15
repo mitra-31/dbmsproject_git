@@ -18,10 +18,19 @@ Welcome
     }
 
     .intro{
+      padding-top: 50px;
       height: 70vh;
       display: flex;
       flex-direction: column;
       text-align: center;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: 0.5s all-ease-in-out;
+    }
+    .intro-appear{
+      opacity: 1;
+      transform:  translateY(0px);
     }
     .intro h2{
       margin-top: 10px;
@@ -55,7 +64,7 @@ Welcome
     <a href="#intro"><button class="h_btn" type="button">Explore</button></a>
   </div>
 </div>
-<div class="intro">
+<div class="intro intro-appear">
   <h2 style="text-decoration: underline;">ABOUT THIS PROJECT</h2>
   <p>This is a DBMS project which is based on the Flask framework. The flask framework is a built-in development server and a fast debugger. It has an integrated support for unit testing and a Jinja2 templating. It supports for secure cookies and is lightweight. It's modular design helps for a flexible framework. Hence, considering these features of the flask, it's been used in this DBMS project.
     In this project, the user can access the particular artist, genre, language and the desired type of the music he wishes to.</p>
@@ -70,7 +79,7 @@ Welcome
   <div class="carousel-inner" role="listbox">
     <div class="carousel-item active">
       <div class="view">
-        <img class="d-block w-100 " src="{{images[0]}}" alt="First slide">
+        <img class="d-block w-100 " src="{{url_for('static',filename='img/band.png')}}" alt="First slide">
         <div class="mask rgba-black-light"></div>
       </div>
       <div class="carousel-caption">
@@ -108,18 +117,23 @@ Welcome
     <span class="sr-only">Next</span>
   </a>
 </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <div class="box2">
   <div class="box2-box1">
     <h2>USER SIGN-IN</h2>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos nisi quos sit eaque cum illo ad, tempore voluptate autem veritatis vitae veniam iure, molestiae eum placeat repellat recusandae consectetur quaerat?</p>
-    <a href="#intro"><button class="sign-in" type="button">Login/Register</button></a>
-
+    <a href="#intro"><button class="sign-in" type="button">Explore</button></a>
+ 
   </div>
   <div class="box2-box2">
     <h2>MUSICIAN SIGN-IN</h2>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis odio est beatae aperiam. Asperiores, sequi? Amet possimus eius aperiam quod accusamus. Amet voluptatem saepe dolor laboriosam ipsam commodi rem voluptatum!</p>
-    <a href="#intro"><button class="sign-in" type="button">Login/Register</button></a>
-
+    <a href="#intro"><button class="sign-in" type="button">Explore</button></a>
   </div>
 </div>
 
@@ -167,4 +181,17 @@ Welcome
 </div>
 </footer>
 </div>
+<script>
+  function scrollAppear(){
+    var introtext = document.querySelector('.intro');
+    var introposition = introtext.getBoundingClientRect().top;
+    var screenposition = window.innerHeight;
+
+    if(introposition < screenposition){
+      introtext.classList.add(".intro-appear")
+
+    }
+  }
+  window.addEventListener('scroll',scrollAppear)
+</script>
 {% endblock main %}
