@@ -15,8 +15,6 @@ app = Flask(__name__)
 imgfolder = os.path.join('static','img')
 app.config['UPLOAD_FOLDER'] = imgfolder
 
-music = os.path.join('static','music')
-app.config['UPLOAD_FOLDER'] = music
 
 #css Bundling
 css = Bundle('css/home.css','css/signin.css','css/dashboard.css','css/profile.css','css/music_dash.css',output='gen/main.css')
@@ -33,6 +31,11 @@ def music(song):
     song.save(file_path)
 
     return title
+
+
+"""
+    To store mp3 files  in db and save mp3 file in given filepath
+"""
 def save_music(song):
     #print(song)
     name = os.path.splitext(song.filename)
@@ -43,6 +46,11 @@ def save_music(song):
     song.save(file_path)
     return music_name
 
+
+
+"""
+    To store images in db and save images in given filepath
+"""
 def save_images(photo):
     print(photo)
     name = os.path.splitext(photo.filename)
@@ -53,8 +61,11 @@ def save_images(photo):
     photo.save(file_path)
     return photo_name
 
-#configure db
 
+
+"""
+    Mysql Configurations 
+"""
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'user123'
@@ -62,14 +73,7 @@ app.config['MYSQL_DB'] = 'project'
 mysql = MySQL(app)
 
 
-def bd(filename):
-    with open(filename, 'rb') as file:
-        binaryData = file.read()
-    return binaryData
-def pic(binarydata):
-    a = bd(binarydata)
-    with open(binarydata,"wb") as r:
-        r.write(a)
 
 
-from app import login
+
+from app import login,dashboard

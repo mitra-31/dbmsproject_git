@@ -3,76 +3,110 @@
 {% block title %}
 {% endblock title %}
 
+
 {% block main %}
 <style>
-   *{
-       margin: 0;
-       padding: 0;
-       box-sizing: border-box;
-       list-style: none;
-       text-decoration: none;
-       font-family: 'Josefin Sans',sans-serif;
-   }
-   audio{
-    bottom: 16px;
-    color: blueviolet;
-    display: hidden;
-    position: fixed;
-    width: 85%;
-    outline: none;
-  }
-</style>
-    <div class="user-wrapper">
-        <div class="sidnav">
-            <h2>MLIB</h2>
-            <ul>
-                <li><a href=""><i class="fa fa-user"></i> Profile</a></li>
-                <li><a href=""><i class="fa fa-stream"></i>playlist</a></li> 
-                <li><a href=""><i class="fa fa-play"></i>recent</a></li>
-                <li><a href=""><i class="fa fa-music"></i>artists</a></li>
-                <li><a href=""><i class="fa fa-sign-out"></i>logout</a></li>
-            </ul>
-            
-                <ul class="social">
-                    <h6>follow us</h6>
-                  <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                  <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                  <li><a class="dribbble" href="#"><i class="fa fa-instagram"></i></a></li>
-                </ul>
-        </div>
-        <div class="main_content">
-            <div class="header">Welcome,user</div>
-            <div class="music">
-               <ul id="playlist">
-                   <li id="current-song"><a href="{{url_for('static',filename='music/mood.mp3')}}">mood</a></li>
-                   <li><a href="{{url_for('static',filename='music/sketches.mp3')}}">sketches</a></li>
-               </ul>
-             <audio src="" controls  id="player"></audio>
+    .card img {
+        display: block;
+        padding: 5px;
+    }
 
+    .clasification {
+        text-align: left;
+        text-decoration: underline;
+    }
+
+    .card-img img{
+        border-radius: 50%;
+        max-width: 20vw;
+    }
+    .hideshows{
+        border: none;
+        background: none;
+    }
+    .card .card-text{
+        font-weight: bolder;
+        color: white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+    .logo-slider{
+        width: 100%;
+    }
+    #btn-ajax{
+        border: none;
+        background: none;
+        outline: none;
+    }
+    .intro{
+        display: flex;
+        flex-direction: row;
+    }
+    .user-intro{
+        flex: 1;
+    }
+</style>
+<div class="intro">
+    <div class="user-intro">
+    <h1>Welcome</h1>
+</div>
+    <div class="search">
+    <nav class="navbar navbar-expand-lg ">
+    <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline" type="submit"><i class="fa fa-search"></i></button>
+      </form>
+    </nav>
+</div>
+</div>
+<hr>
+
+<button class="hideshows" onclick="toggleClass();"><h5 id="classification-genre"><i class="fa fa-arrow-down" id="arrow-down" ></i>Genre</h5></button>
+<div class="row" id="row-g">
+    {% for genre in genres %}
+    <div class="col-ml-3">
+        <button id="btn-ajax">
+            <div class="card" style="width: 15rem; margin: 10px;">
+                <img src="{{url_for('static',filename='img/genre/{}'.format(genre[1]))}}" class="card-img-top" alt="..." height="200px">
+                <h4 class="card-text" id="btn-ajax">{{genre[0]}}</h4>
+                <div class="card-body text-center">
+                </div>
             </div>
-        </div>
+        </button>
     </div>
-    <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+    {% endfor %}
+</div>
+<hr>
+<div id="resp">
+
+</div>
+<h5 class="hideshows">Artists</h5>
+<div class="logo-slider">
+    {% for artist in artists %}
+        <a href="/music/genre">
+            <div class="card-img" style="width: 10rem; margin: 10px;">
+                <img src="{{url_for('static',filename='img/artists/{}'.format(artist[1]))}}" class="card-img-top" alt="..." height="100px">
+                <div class="card-body text-center">
+                    <p class="card-text">{{artist[0]}}</p>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+</div>
+
+    
+
     <script>
-        audioPlayer();
-        function audioPlayer(){
-            var currentSong = 0;
-            $("#player")[0].src = $("#playlist li a")[0];
-            $("#player")[0].play();
-            $("#playlist li a").click(function(e){
-                e.preventDefault();
-                $("#player")[0].src = this;
-                $("#player")[0].play();
-            $("#playlist li").removeClass("current-song");
-                currentSong = $(this).parent().index();
-                $(this).parent().addClass("current-song");
+        $('button#btn-ajax').click(function(){
+            $.ajax({
+                url: "/genre",
+                type: "POST",
+                success: function(resp){
+                    $('div#resp').append(resp.data);
+                }
             });
-            $("#player")[0].addEventListener("ended",function(){
-                currentSong++;
-                if(currentSong == $("#playlist li a").length)
-                currentSong = 0;
-                $('#playlist li').removeClass("current-song");
-            });
-        }
+          });
     </script>
 {% endblock main %}

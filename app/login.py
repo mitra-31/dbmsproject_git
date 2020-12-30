@@ -5,49 +5,108 @@ from flask_fontawesome import fontawesome_css
 import os
 
 
+# Home page
 
-
-
-
-"""
-    Intro page of the webiste where user or musican can login or signup
-
-"""
-@app.route('/' , methods=['GET','POST'])
+@app.route('/', methods=['GET', 'POST'])
 def home():
-    flash("Login Successful", "success")
-    slideImage1 = os.path.join(app.config['UPLOAD_FOLDER'], 'headphones.jpg')
-    slideImage2 = os.path.join(app.config['UPLOAD_FOLDER'], 'band.png')
-    slideImage3 = os.path.join(app.config['UPLOAD_FOLDER'], 'login.jpg')
-    flask = os.path.join(app.config['UPLOAD_FOLDER'], 'flask.png')
-    imagesOnWeb = [slideImage1, slideImage2, slideImage3, flask]
-    return render_template('index/home.html', images=imagesOnWeb)
+    return render_template('index/home.html')
 
 
-"""
-    Login validation will be done using this function
+# User Login
 
-"""
-
-
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    dummy = os.path.join(app.config['UPLOAD_FOLDER'], 'dummy.png')
-
+@app.route("/user/login", methods=['GET', 'POST'])
+def user_login():
+   
     if request.method == "POST":
-        username = request.form.get("username")
-        print(username)
+        """
+            Retriving data from html forms
+        """
+        username = request.form.get("username") 
         password = request.form.get("password")
+
+        """
+            Retriving data from database and validating html form and database
+        """
         cur = mysql.connection.cursor()
-        cur.execute("SELECT username FROM logindetails WHERE username = '{0}'".format(username))
+        cur.execute(
+            "SELECT username FROM logindetails WHERE username = '{0}'".format(username))
         usernamedata = cur.fetchone()
-        cur.execute("SELECT password FROM logindetails WHERE username = '{0}'".format(username))
+        cur.execute(
+            "SELECT password FROM logindetails WHERE username = '{0}'".format(username))
         passworddata = cur.fetchone()
         mysql.connection.commit()
         cur.close()
-        # print(usernamedata,passworddata)
+
+
+        # Validation 
         if usernamedata is None:
-            flash("Username not found", "danger")
+            return redirect(url_for("login"))
+
+        if len(username) > 0 and len(password) > 0:
+            if username in usernamedata and password in passworddata:
+                return redirect(url_for('home'))
+            else:
+                return redirect(url_for('login'))
+
+    return render_template('index/signin.html')
+
+
+# User Register
+
+@app.route("/user/register", methods=['GET', 'POST'])
+def user_register():
+
+    if request.method == 'POST':
+        """
+            Retriving data from User registerations form
+        """
+        user = request.form
+        firstname = user['firstname']
+        lastname = user['lastname']
+        email = user['email']
+        password = user['password']
+
+        """
+            Connecting to database and Inserting data into table
+        """
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO user(firstname,lastname,email,password) VALUES(%s,%s,%s,%s)",
+                    (firstname, lastname, email, password))
+        mysql.connection.commit()
+        cur.close()
+        return redirect('music')
+
+    return render_template('index/signup.html')
+
+
+# Admin Login
+
+@app.route("/user/login", methods=['GET', 'POST'])
+def admin_login():
+
+    if request.method == "POST":
+        """
+            Retriving data from html forms
+        """
+        username = request.form.get("username") 
+        password = request.form.get("password")
+
+        """
+            Retriving data from database and validating html form and database
+        """
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "SELECT username FROM logindetails WHERE username = '{0}'".format(username))
+        usernamedata = cur.fetchone()
+        cur.execute(
+            "SELECT password FROM logindetails WHERE username = '{0}'".format(username))
+        passworddata = cur.fetchone()
+        mysql.connection.commit()
+        cur.close()
+
+        #Validation 
+
+        if usernamedata is None:
             return redirect(url_for("login"))
 
         if len(username) > 0 and len(password) > 0:
@@ -57,28 +116,24 @@ def login():
                 flash(" Incorrect Password", "danger")
                 return redirect(url_for('login'))
 
-    return render_template('index/signin.html', dummy=dummy)
+    return render_template('index/signin.html')
 
- # register
-@app.route("/register", methods=['GET', 'POST'])
-def register():
-    # to load background_iamge
-    dummy = os.path.join(app.config['UPLOAD_FOLDER'], 'dummy.png')
 
-    # inserting values inside loginDetials table
+# admin registrations
+
+@app.route("/user/register", methods=['GET', 'POST'])
+def admin_register():
     if request.method == 'POST':
-        user = request.form
-        firstname = user['firstname']
-        lastname = user['lastname']
-        email = user['email']
-        password = user['password']
+        admin = request.form
+        firstname = admin['firstname']
+        lastname = admin['lastname']
+        email = admin['email']
+        password = admin['password']
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO user(firstname,lastname,email,password) VALUES(%s,%s,%s,%s)",
                     (firstname, lastname, email, password))
         mysql.connection.commit()
         cur.close()
-        flash("Successfully registered", "success")
-        return redirect('/profilepic')
-    return render_template('index/signup.html',  dummy=dummy)
+        return redirect('/admin/login')
 
-
+    return render_template('index/signup.html')

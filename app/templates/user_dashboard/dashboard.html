@@ -1,13 +1,22 @@
-{% extends 'jinja_temp/user_dashboard.html' %}
+<div class="user-wrapper">
+  <div class="sidnav">
+      <h2>MLIB</h2>
+      <ul>
+          <li><a href=""><i class="fa fa-user"></i> Profile</a></li>
+          <li><a href=""><i class="fa fa-home"></i> home</a></li>
+          <li><a href=""><i class="fa fa-stream"></i>playlist</a></li>
+          <li><a href="/music/genre"><i class="fa fa-stream"></i>genre</a></li>
+          <li><a href=""><i class="fa fa-play"></i>recent</a></li>
+          <li><a href=""><i class="fa fa-music"></i>artists</a></li>
+          <li><a href=""><i class="fa fa-sign-out"></i>logout</a></li>
+      </ul>
 
-{% block title %}
-{% endblock title %}
-
-{% block main %}
-    <form action="" method="post" enctype="multipart/form-data">
-        <input type="text" name="title" id="">
-        <input type="file" name="data">
-        <input type="file" name="pic">
-        <input type="submit" value="submit">
-    </form>
-{% endblock main %}
+      <ul class="social">
+          <h6>follow us</h6>
+          <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+          <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+          <li><a class="dribbble" href="#"><i class="fa fa-instagram"></i></a></li>
+      </ul>
+  </div>
+ 
+</div>

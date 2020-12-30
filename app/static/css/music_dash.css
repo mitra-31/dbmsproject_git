@@ -1,16 +1,11 @@
-body{
-    background-color: rgba(220, 220, 220, 0.568);
-}
-.user-wrapper{
-    display: flex;
-    position: relative;
-}
+
+
 
 .user-wrapper .sidnav{
     position: fixed;
     width: 200px;
     height: 100%;
-    background-color: #f2325f;
+    background-color:black;
     padding: 30px 0;
 }
 
@@ -38,8 +33,15 @@ body{
 }
 
 .user-wrapper .sidnav ul li :hover{
-    color: rgba(0, 0, 0, 0.452);
+    color:rgba(245, 245, 245, 0.493);
+
 }
+.user-wrapper .sidnav ul li :focus{
+    background:white;
+    color: black;
+    padding: 15px;
+}
+
 
 .social li{
     display: inline-block;
@@ -52,20 +54,19 @@ body{
 }
 .social{
     padding-left: 0;
-    padding-top: 80%;
+    padding-top: 30%;
 }
 
 
-.user-wrapper .main_content{
-    width: 100%;
-    margin-left: 200px;
-}
-.user-wrapper .main_content .header{
-    padding: 20px;
-    background: #ffff;
-    border-bottom: 1px solid #e0e4e8;
-}
 
 
+audio {
+    bottom: 16px;
+    color: blueviolet;
+    display: hidden;
+    position: fixed;
+    width: 10%;
+    outline: none;
+}
 
 
