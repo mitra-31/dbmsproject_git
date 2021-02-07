@@ -61,20 +61,21 @@ def user_register():
             Retriving data from User registerations form
         """
         user = request.form
-        firstname = user['firstname']
-        lastname = user['lastname']
-        email = user['email']
+        username = user['username']
         password = user['password']
+        email = user['email']
+        dob = user['dob']
+        profilepic = save_images(request.files.get ('profilepic'))
 
         """
             Connecting to database and Inserting data into table
         """
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO user(firstname,lastname,email,password) VALUES(%s,%s,%s,%s)",
-                    (firstname, lastname, email, password))
+        cur.execute("INSERT INTO user(username,password,email_id,dob,profilepic) VALUES(%s,%s,%s,%s,%s)",
+                    (username,password,email,dob,profilepic))
         mysql.connection.commit()
         cur.close()
-        return redirect('music')
+        return redirect('user/login')
 
     return render_template('index/signup.html')
 
